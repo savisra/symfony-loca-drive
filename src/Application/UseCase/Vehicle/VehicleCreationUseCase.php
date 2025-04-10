@@ -11,7 +11,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 class VehicleCreationUseCase
 {
     private EntityManagerInterface $entityManager;
-    private Security $security;
 
     public function __construct(
         EntityManagerInterface $entityManager
@@ -21,7 +20,6 @@ class VehicleCreationUseCase
     }
 
     public function execute(
-        User $user,
         string $model, 
         string $brand, 
         float $dailyRate
