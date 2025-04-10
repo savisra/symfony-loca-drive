@@ -3,3 +3,6 @@ controllers:
         path: ../src/Infrastructure/Controller/
         namespace: App\Infrastructure\Controller
     type: attribute
+auth_login_check:
+    path: /auth/login
+    methods: ['POST']
