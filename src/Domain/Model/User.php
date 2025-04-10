@@ -50,8 +50,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         string $password,
         string $firstname,
         string $lastname,
-        string $role = 'CUSTOMER',
         DateTimeImmutable $drivingLicenseIssueDate,
+        string $role = 'ROLE_CUSTOMER',
         UserPasswordHasherInterface $hasher
     ) 
     {
@@ -63,6 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $hasher->hashPassword($this, $password);
         $this->firstname = $firstname;
         $this->lastname = $lastname;
+        $this->drivingLicenseIssueDate = $drivingLicenseIssueDate;
         $this->roles[] = $role;
     }
 
@@ -76,7 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             throw new Exception("The password must be > 8 characters long.");
         }
 
-        $valid = preg_match('/^(?=(?:.*[A-Za-z]){4})(?=(?:.*\d){4})[A-Za-z\d]{8}$/', $password);
+        $valid = preg_match('/^(?=(?:.*[A-Za-z]){4,})(?=(?:.*\d){4,}).{8,}$/', $password);
         
         if (!$valid) {
             throw new Exception("Password must contain at least 4 letters and 4 numbers.");

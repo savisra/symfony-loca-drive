@@ -1,0 +1,21 @@
+meta {
+  name: user-create
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8000/auth/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "jean.culaceque@toto.tata",
+    "firstName": "Jean",
+    "lastName": "CULACEQUE",
+    "drivingLicenseIssueDate": "03/04/2024",
+    "password": "gayy1234@"
+  }
+}
