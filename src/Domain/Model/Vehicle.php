@@ -2,7 +2,7 @@
 
 namespace App\Domain\Model;
 
-use App\Infrastructure\Doctrine\Repository\VehicleRepository;
+use App\Domain\Repository\VehicleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
@@ -29,7 +29,7 @@ class Vehicle
         float $dailyRate
     )
     {
-        $this->ensureFieldsAreDefined($model, $brand, $dailyRate);
+        $this->ensureRequiredFieldsAreProvided($model, $brand, $dailyRate);
         $this->ensureDailyRateIsPositive($dailyRate);
 
         $this->model = $model;
@@ -37,7 +37,7 @@ class Vehicle
         $this->dailyRate = $dailyRate;
     }
 
-    private function ensureFieldsAreDefined(string $model, string $brand, float $dailyRate)
+    private function ensureRequiredFieldsAreProvided(string $model, string $brand, float $dailyRate)
     {
         if (!$model || !$brand || !$dailyRate) {
             throw new Exception("Model, brand, dailyRate are required fields. Passed: $model, $brand, $dailyRate");
