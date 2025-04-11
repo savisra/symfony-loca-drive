@@ -18,7 +18,7 @@ use Exception;
 #[Route('/order')]
 final class OrderController extends AbstractController
 {
-    #[Route('/add_item', name: 'app_order_add_item', methods: ['POST'])]
+    #[Route('/item', name: 'app_order_add_item', methods: ['POST'])]
     public function add_item(Request $request, OrderAddItemUseCase $orderAddItemUseCase): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -53,7 +53,7 @@ final class OrderController extends AbstractController
         }
     }
 
-    #[Route('/remove_item', name: 'app_order_remove_item', methods: ['DELETE'])]
+    #[Route('/item', name: 'app_order_remove_item', methods: ['DELETE'])]
     public function remove_item(Request $request, OrderRemoveItemUseCase $orderRemoveItemUseCase): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -81,7 +81,7 @@ final class OrderController extends AbstractController
         }
     }
 
-    #[Route('/add_insurance', name: 'app_order_add_insurance', methods: ['PATCH'])]
+    #[Route('/insurance/add', name: 'app_order_add_insurance', methods: ['PATCH'])]
     public function add(Request $request, OrderAddInsuranceUseCase $orderAddInsuranceUseCase): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -109,7 +109,7 @@ final class OrderController extends AbstractController
         }
     }
 
-    #[Route('/remove_insurance', name: 'app_order_remove_insurance', methods: ['PATCH'])]
+    #[Route('/insurance/remove', name: 'app_order_remove_insurance', methods: ['PATCH'])]
     public function remove(Request $request, OrderRemoveInsuranceUseCase $orderRemoveInsuranceUseCase): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -166,7 +166,7 @@ final class OrderController extends AbstractController
     }
 
     #[Route('/pay', name: 'app_order_pay', methods: ['PATCH'])]
-    public function pay(Request $request, OrderPayUseCase $orderPayUseCase): JsonResponse
+    public function pay(OrderPayUseCase $orderPayUseCase): JsonResponse
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

@@ -2,7 +2,6 @@
 
 namespace App\Infrastructure\Controller;
 
-use App\Application\UseCase\Authentication\LoginUseCase;
 use App\Application\UseCase\Authentication\RegisterCustomerUseCase;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

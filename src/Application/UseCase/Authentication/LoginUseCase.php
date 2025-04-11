@@ -3,7 +3,6 @@
 namespace App\Application\UseCase\Authentication;
 
 use App\Domain\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 

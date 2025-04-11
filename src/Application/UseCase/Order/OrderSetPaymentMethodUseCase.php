@@ -2,9 +2,7 @@
 
 namespace App\Application\UseCase\Order;
 
-use App\Domain\Model\Insurance;
 use App\Domain\Model\User;
-use App\Domain\Model\Rental;
 use App\Domain\Model\Order;
 use App\Domain\Model\OrderStatus;
 use App\Domain\Model\PaymentMethod;
