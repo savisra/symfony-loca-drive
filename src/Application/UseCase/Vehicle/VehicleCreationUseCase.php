@@ -2,11 +2,9 @@
 
 namespace App\Application\UseCase\Vehicle;
 
-use App\Domain\Model\User;
 use App\Domain\Model\Vehicle;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class VehicleCreationUseCase
 {

@@ -27,7 +27,7 @@ class Rental
     private ?Order $order = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Insurance $insurance = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -48,12 +48,10 @@ class Rental
     public function __construct(
         Vehicle $vehicle,
         Order $order,
-        Insurance $insurance,
+        ?Insurance $insurance = null,
         DateTimeImmutable $startDate,
         DateTimeImmutable $endDate,
         string $pickupLocation,
-        bool $hasInsurance,
-        float $price
     ) 
     {
         $this->ensureDatesCoherence($startDate, $endDate);
@@ -64,8 +62,9 @@ class Rental
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->pickupLocation = $pickupLocation;
-        $this->hasInsurance = $hasInsurance;
-        $this->price = $price;
+        $this->hasInsurance = !empty($insurance);
+        
+        $this->determinePrice();
     }
 
     private function ensureDatesCoherence(DateTimeImmutable $startDate, DateTimeImmutable $endDate)
@@ -78,6 +77,19 @@ class Rental
         if ($startDate >= $endDate) {
             throw new Exception('End date cannot be <= start date.');
         }
+    }
+
+    private function determinePrice()
+    {
+        $dailyRate = $this->vehicle->getDailyRate();
+        $duration = $this->startDate->diff($this->endDate)->days;
+        $price = $dailyRate * $duration;
+
+        if ($this->hasInsurance()) {
+            $price += $this->insurance->getPrice();
+        }
+
+        $this->price = $price;
     }
 
     public function getId(): ?int
@@ -104,7 +116,7 @@ class Rental
 
     public function setOrder(?Order $order): static
     {
-        $this->$order = $order;
+        $this->order = $order;
 
         return $this;
     }
@@ -116,7 +128,7 @@ class Rental
 
     public function setInsurance(?Insurance $insurance): static
     {
-        $this->insurance;
+        $this->insurance = $insurance;
 
         return $this;
     }

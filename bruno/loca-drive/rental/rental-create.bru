@@ -1,0 +1,20 @@
+meta {
+  name: rental-create
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8000/rental/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "vehicle_id": "2",
+    "start_date": "2025-04-12",
+    "end_date": "2025-04-13",
+    "pickup_location": "montenegro"
+  }
+}
