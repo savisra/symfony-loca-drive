@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Application\UseCase\Insurance;
+namespace App\Application\UseCase\Order;
 
-use App\Domain\Model\Insurance;
 use App\Domain\Model\User;
 use App\Domain\Model\Rental;
 use App\Domain\Model\Order;
@@ -10,16 +9,16 @@ use App\Domain\Model\OrderStatus;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
-class AddInsuranceToRentalUseCase
+class OrderRemoveInsuranceUseCase
 {
-        private EntityManagerInterface $entityManager;
+    private EntityManagerInterface $entityManager;
 
-        public function __construct(
-            EntityManagerInterface $entityManager
-        )
-        {
-            $this->entityManager = $entityManager;
-        }
+    public function __construct(
+        EntityManagerInterface $entityManager
+    )
+    {
+        $this->entityManager = $entityManager;
+    }
 
     public function execute(
         int $rentalId,
@@ -31,8 +30,8 @@ class AddInsuranceToRentalUseCase
         }
 
         // Check that insurance isn't already set
-        if ($rental->hasInsurance()) {
-            throw new Exception("Rental $rentalId already includes an insurance");
+        if (!$rental->hasInsurance()) {
+            throw new Exception("Rental $rentalId has no insurance");
         }
 
         // Get user-related Order and check its status is CART
@@ -41,15 +40,13 @@ class AddInsuranceToRentalUseCase
             throw new Exception("No Order found for customer with ID " . $customer->getId());
         }
         if ($order->getStatus() !== OrderStatus::CART) {
-            throw new Exception("Cannot add an Insurance to an order which status is not CART");
+            throw new Exception("Cannot remove an Insurance from an order which status is not CART");
         }
         if ($rental->getOrder()->getId() !== $order->getId()) {
             throw new Exception("The rental does not belong in Customer's cart");
         }
 
-        // Get the (single, same for all) insurance
-        $insurance = $this->entityManager->getRepository(Insurance::class)->find(1);
-        $rental->setInsurance($insurance);
+        $rental->clearInsurance();
         $order->determinePrice();
 
         $this->entityManager->flush();

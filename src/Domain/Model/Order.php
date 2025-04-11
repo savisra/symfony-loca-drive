@@ -29,7 +29,7 @@ class Order
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $paymentMethod = null;
+    private ?PaymentMethod $paymentMethod = null;
 
     #[ORM\Column]
     private ?float $totalPrice = null;
@@ -101,12 +101,12 @@ class Order
         return $this;
     }
 
-    public function getPaymentMethod(): ?string
+    public function getPaymentMethod(): ?PaymentMethod
     {
         return $this->paymentMethod;
     }
 
-    public function setPaymentMethod(string $paymentMethod): static
+    public function setPaymentMethod(PaymentMethod $paymentMethod): static
     {
         $this->paymentMethod = $paymentMethod;
 

@@ -1,17 +1,17 @@
 meta {
-  name: rental-delete
+  name: remove_item
   type: http
   seq: 2
 }
 
 delete {
-  url: http://localhost:8000/rental/delete
+  url: http://localhost:8000/order/remove_item
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "rental_id": "1"
+    "rental_id": "4"
   }
 }

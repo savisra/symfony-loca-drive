@@ -1,0 +1,17 @@
+meta {
+  name: set-payment-method
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8000/order/set_payment_method
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "payment_method": "troc de bananes"
+  }
+}

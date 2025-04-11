@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Application\UseCase\Rental;
+namespace App\Application\UseCase\Order;
 
-use App\Application\UseCase\Order\OrderCreationUseCase;
-use App\Domain\Model\Order;
-use App\Domain\Model\OrderStatus;
-use App\Domain\Model\Rental;
-use App\Domain\Model\Vehicle;
-use App\Domain\Model\User;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Domain\Model\User;
+use App\Domain\Model\Order;
+use App\Domain\Model\Vehicle;
+use App\Domain\Model\Rental;
+use DateTimeImmutable;
+use App\Domain\Model\OrderStatus;
 use Exception;
 
-class RentalCreationUseCase
+class OrderAddItemUseCase
 {
     private EntityManagerInterface $entityManager;
 

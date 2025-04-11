@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Application\UseCase\Rental;
+namespace App\Application\UseCase\Order;
 
-use App\Domain\Model\Rental;
+use App\Domain\Model\Insurance;
 use App\Domain\Model\User;
+use App\Domain\Model\Rental;
 use App\Domain\Model\Order;
 use App\Domain\Model\OrderStatus;
+use App\Domain\Model\PaymentMethod;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use ValueError;
 
-class RentalDeletionUseCase
+class OrderSetPaymentMethodUseCase
 {
     private EntityManagerInterface $entityManager;
 
@@ -21,28 +24,29 @@ class RentalDeletionUseCase
     }
 
     public function execute(
-        User $customer,
-        int $rentalId
+        string $paymentMethod,
+        User $customer
     ) {
-        $rental = $this->entityManager->getRepository(Rental::class)->find($rentalId);
-        if (!$rental) {
-            throw new Exception("Rental not found with ID $rentalId");
-        }
-
         // Get user-related Order and check its status is CART
         $order = $this->entityManager->getRepository(Order::class)->findOrderByCustomer($customer);
         if (!$order) {
             throw new Exception("No Order found for customer with ID " . $customer->getId());
         }
         if ($order->getStatus() !== OrderStatus::CART) {
-            throw new Exception("Cannot remove a Rental from an order which status is not CART");
+            throw new Exception("Cannot set Payment Method to an order which status is not CART");
+        }
+        
+        $paymentMethodValue = null;
+        try {
+            $paymentMethodValue = PaymentMethod::from($paymentMethod);
+        } catch (ValueError $e) {
+            // Graceful fallback
+            $paymentMethodValue = PaymentMethod::CARD;
         }
 
-        if ($rental->getOrder()->getId() !== $order->getId()) {
-            throw new Exception("The rental does not belong in Customer's cart");
-        }
+        $order->setPaymentMethod($paymentMethodValue);
+        $order->setStatus(OrderStatus::PAYMENT_METHOD_SET);
 
-        $order->removeRental($rental);
         $this->entityManager->flush();
     }
 }
