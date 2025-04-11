@@ -48,7 +48,7 @@ class Order
         $this->determinePrice();
     }
 
-    private function determinePrice()
+    public function determinePrice()
     {
         $rentals = $this->getRentals();
         $price = 0;

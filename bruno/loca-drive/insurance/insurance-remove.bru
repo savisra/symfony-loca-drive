@@ -1,0 +1,17 @@
+meta {
+  name: insurance-remove
+  type: http
+  seq: 2
+}
+
+patch {
+  url: http://localhost:8000/insurance/remove
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "rental_id": "3"
+  }
+}

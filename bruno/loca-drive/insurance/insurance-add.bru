@@ -1,0 +1,17 @@
+meta {
+  name: insurance-add
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8000/insurance/add
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "rental_id": "3"
+  }
+}

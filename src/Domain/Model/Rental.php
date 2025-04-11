@@ -129,7 +129,20 @@ class Rental
     public function setInsurance(?Insurance $insurance): static
     {
         $this->insurance = $insurance;
+        $this->hasInsurance = true;
+        $this->determinePrice();
+        $this->order->determinePrice();
 
+        return $this;
+    }
+
+    public function clearInsurance(): static
+    {
+        $this->insurance = null;
+        $this->hasInsurance = false;
+        $this->determinePrice();
+        $this->order->determinePrice();
+        
         return $this;
     }
 
