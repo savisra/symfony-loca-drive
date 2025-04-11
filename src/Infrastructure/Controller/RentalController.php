@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Controller;
 
 use App\Application\UseCase\Rental\RentalCreationUseCase;
+use App\Application\UseCase\Rental\RentalDeletionUseCase;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,34 @@ final class RentalController extends AbstractController
                     'rental_id' => $rentalId
                 ],
                 Response::HTTP_CREATED
+            );
+        } catch (Exception $e) {
+            return $this->json(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    #[Route('/delete', name: 'app_rental_delete', methods: ['DELETE'])]
+    public function deletion(Request $request, RentalDeletionUseCase $rentalDeletionUseCase): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['rental_id'])) {
+            return $this->json(['error' => 'Missing required field: rental_id'], Response::HTTP_BAD_REQUEST);
+        }
+
+        try {
+            $rentalDeletionUseCase->execute(
+                $this->getUser(),
+                $data['rental_id']
+            );
+
+            return $this->json(
+                [
+                    'message' => 'Rental deleted successfully',
+                ],
+                Response::HTTP_OK
             );
         } catch (Exception $e) {
             return $this->json(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);

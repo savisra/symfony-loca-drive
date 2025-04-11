@@ -30,7 +30,7 @@ class RentalDeletionUseCase
         }
 
         // Get user-related Order and check its status is CART
-        $order = $this->entityManager->getRepository(Order::class)->findOneBy(['customer_id' => $customer->getId()]);
+        $order = $this->entityManager->getRepository(Order::class)->findOrderByCustomer($customer);
         if (!$order) {
             throw new Exception("No Order found for customer with ID " . $customer->getId());
         }

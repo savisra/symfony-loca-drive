@@ -22,7 +22,7 @@ class OrderRepository extends ServiceEntityRepository
                     ->andWhere('o.customer = :customer')
                     ->setParameter('customer', $customer)
                     ->getQuery()
-                    ->getResult();
+                    ->getOneOrNullResult();
     }
 
     //    /**
