@@ -97,18 +97,6 @@ class Rental
         return $this->id;
     }
 
-    public function getVehicle(): ?Vehicle
-    {
-        return $this->vehicle;
-    }
-
-    public function setVehicle(?Vehicle $vehicle): static
-    {
-        $this->$vehicle = $vehicle;
-
-        return $this;
-    }
-
     public function getOrder(): ?Order
     {
         return $this->order;
@@ -119,11 +107,6 @@ class Rental
         $this->order = $order;
 
         return $this;
-    }
-
-    public function getInsurance(): ?Insurance
-    {
-        return $this->insurance;
     }
 
     public function setInsurance(?Insurance $insurance): static
@@ -146,63 +129,13 @@ class Rental
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeInterface
-    {
-        return $this->startDate;
-    }
-
-    public function setStartDate(\DateTimeInterface $startDate): static
-    {
-        $this->startDate = $startDate;
-
-        return $this;
-    }
-
-    public function getEndDate(): ?\DateTimeInterface
-    {
-        return $this->endDate;
-    }
-
-    public function setEndDate(\DateTimeInterface $endDate): static
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    public function getPickupLocation(): ?string
-    {
-        return $this->pickupLocation;
-    }
-
-    public function setPickupLocation(string $pickupLocation): static
-    {
-        $this->pickupLocation = $pickupLocation;
-
-        return $this;
-    }
-
     public function hasInsurance(): ?bool
     {
         return $this->hasInsurance;
     }
 
-    public function setHasInsurance(bool $hasInsurance): static
-    {
-        $this->hasInsurance = $hasInsurance;
-
-        return $this;
-    }
-
     public function getPrice(): ?float
     {
         return $this->price;
-    }
-
-    public function setPrice(float $price): static
-    {
-        $this->price = $price;
-
-        return $this;
     }
 }

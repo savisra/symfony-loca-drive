@@ -65,18 +65,6 @@ class Order
         return $this->id;
     }
 
-    public function getCustomer(): ?User
-    {
-        return $this->customer;
-    }
-
-    public function setCustomer(?User $customer): static
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
     public function getStatus(): ?OrderStatus
     {
         return $this->status;
@@ -89,38 +77,9 @@ class Order
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getPaymentMethod(): ?PaymentMethod
-    {
-        return $this->paymentMethod;
-    }
-
     public function setPaymentMethod(PaymentMethod $paymentMethod): static
     {
         $this->paymentMethod = $paymentMethod;
-
-        return $this;
-    }
-
-    public function getTotalPrice(): ?float
-    {
-        return $this->totalPrice;
-    }
-
-    public function setTotalPrice(float $totalPrice): static
-    {
-        $this->totalPrice = $totalPrice;
 
         return $this;
     }

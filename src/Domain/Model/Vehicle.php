@@ -56,21 +56,11 @@ class Vehicle
         return $this->id;
     }
 
-    public function getModel(): ?string
-    {
-        return $this->model;
-    }
-
     public function setModel(string $model): static
     {
         $this->model = $model;
 
         return $this;
-    }
-
-    public function getBrand(): ?string
-    {
-        return $this->brand;
     }
 
     public function setBrand(string $brand): static
